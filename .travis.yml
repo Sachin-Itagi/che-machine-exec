@@ -1,0 +1,71 @@
+dist: focal
+
+services: docker
+
+stages:
+  - Code Coverage
+  - Docker Build
+  - Build Multi Arch 
+  - Docker Build PR
+  - Unit Test
+
+jobs:
+  include:
+    - arch: amd64
+      language: go
+      go: 1.15.x
+      stage: Code Coverage
+      name: Code Coverage
+      script: bash ./travis/codecov.sh
+      
+    - arch: ppc64le
+      language: go
+      go: 1.15.x
+      stage: Code Coverage
+      name: Code Coverage 
+      script: bash ./travis/codecov.sh
+    
+    - arch: amd64
+      language: go
+      go: 1.15.x
+      stage: Docker Build
+      name: Docker Build
+      script: bash ./travis/docker_build.sh
+    
+    - arch: ppc64le
+      language: go
+      go: 1.15.x
+      stage: Docker Build
+      name: Docker Build
+      script: bash ./travis/docker_build.sh
+
+    - arch: amd64
+      language: go
+      go: 1.15.x
+      stage: Build Multi Arch 
+      name: Build and Push Multi-arch Image
+      script: bash ./travis/multi_arch.sh
+
+    - arch: amd64
+      language: go
+      go: 1.15.x
+      stage: Docker Build PR
+      name: Docker Build PR
+      if: type = pull_request
+      script: bash ./travis/docker_build_pr.sh
+
+    - arch: amd64
+      language: go
+      go: 1.15.x
+      stage: Unit Test
+      name: Unit Test
+      if: type = pull_request
+      script: bash ./travis/unit_test.sh
+      
+    - arch: ppc64le
+      language: go
+      go: 1.15.x
+      stage: Unit Test
+      name: Unit Test
+      if: type = pull_request
+      script: bash ./travis/unit_test.sh
