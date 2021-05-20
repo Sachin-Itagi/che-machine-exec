@@ -15,6 +15,7 @@ jobs:
       language: go
       go: 1.15.x
       stage: Code Coverage
+      if: type = push
       name: Code Coverage
       script: bash ./travis/codecov.sh
       
@@ -22,6 +23,7 @@ jobs:
       language: go
       go: 1.15.x
       stage: Code Coverage
+      if: type = push
       name: Code Coverage 
       script: bash ./travis/codecov.sh
     
@@ -29,6 +31,7 @@ jobs:
       language: go
       go: 1.15.x
       stage: Docker Build
+      if: type = push
       name: Docker Build
       script: bash ./travis/docker_build.sh
     
@@ -36,13 +39,15 @@ jobs:
       language: go
       go: 1.15.x
       stage: Docker Build
+      if: type = push
       name: Docker Build
       script: bash ./travis/docker_build.sh
 
     - arch: amd64
       language: go
       go: 1.15.x
-      stage: Build Multi Arch 
+      stage: Build Multi Arch
+      if: type = push 
       name: Build and Push Multi-arch Image
       script: bash ./travis/multi_arch.sh
 
