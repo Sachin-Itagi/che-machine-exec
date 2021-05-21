@@ -9,56 +9,69 @@ stages:
   - Docker Build PR
   - Unit Test
 
-language: go
-
-go: 1.15.x
 
 jobs:
   include:
     - arch: amd64
       stage: Code Coverage
+      language: go
+      go: 1.15.x
       if: type = push
       name: Code Coverage
       script: bash ./travis/codecov.sh
       
     - arch: ppc64le
       stage: Code Coverage
+      language: go
+      go: 1.15.x
       if: type = push
       name: Code Coverage 
       script: bash ./travis/codecov.sh
     
     - arch: amd64
       stage: Docker Build
+      language: go
+      go: 1.15.x
       if: type = push
       name: Docker Build
       script: bash ./travis/docker_build.sh
     
     - arch: ppc64le
       stage: Docker Build
+      language: go
+      go: 1.15.x
       if: type = push
       name: Docker Build
       script: bash ./travis/docker_build.sh
 
     - arch: amd64
       stage: Build Multi Arch
+      language: go
+      go: 1.15.x
       if: type = push 
       name: Build and Push Multi-arch Image
       script: bash ./travis/multi_arch.sh
 
     - arch: amd64
       stage: Docker Build PR
+      language: go
+      go: 1.15.x
       name: Docker Build PR
       if: type = pull_request
       script: bash ./travis/docker_build_pr.sh
 
     - arch: amd64
       stage: Unit Test
+      language: go
+      go: 1.15.x
       name: Unit Test
       if: type = pull_request
       script: bash ./travis/unit_test.sh
       
     - arch: ppc64le
       stage: Unit Test
+      language: go
+      go: 1.15.x
       name: Unit Test
       if: type = pull_request
       script: bash ./travis/unit_test.sh
